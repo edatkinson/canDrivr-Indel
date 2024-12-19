@@ -1,0 +1,134 @@
+
+
+body {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    padding: 20px;
+    max-width: 700px; /* Ensure max width is applied */
+    background-color: #2980b9; /* Softer light yellow for a cleaner look */
+    background-image: url(https://upload.wikimedia.org/wikipedia/commons/1/16/DNA_orbit_animated.gif);
+    background-repeat: no-repeat;
+    background-size: 50% auto;
+    background-position: center top;
+    margin: 50px auto; /* Center the body */
+    text-align: center; /* Center align text */
+    transition: background-color 0.2s ease;
+}
+
+#title {
+    display: inline-block;
+    text-align: center;
+    color: #2c3e50; /* Softer, elegant dark blue */
+    border: 3px solid #34495e; /* Slightly darker border for contrast */
+    border-radius: 25px;
+    width: auto;
+    padding: 15px 25px; /* Add more padding for a balanced look */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4); /* Stronger shadow for a polished effect */
+    background: linear-gradient(360deg, #0b63df, #3a94fb,#48a3f3,#b3d3f9,#c8e6fc); /* Subtle gradient background */
+    font-size: 2rem; /* Larger font size for emphasis */
+}
+
+#uploadtitle {
+    color: #ffffff;
+}
+
+#intro, #whatIsIt, #howToUse {
+    font-size: 18px;
+    border-radius: 15px;
+    background-color: rgba(254, 252, 252,0.8); /* Softer blue background */
+    /* background: linear-gradient(180deg, #b2dcfb, #cce6fc,#b0dcfb); Subtle blue gradient background */
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    margin-top: 20px; /* Add spacing between elements */
+    text-align: left; /* Align text to the left */
+}
+
+h2 {
+    color: #34495e;
+    font-size: 1.8rem;
+    margin: 20px 0;
+    text-decoration: bold;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.6; /* Improve readability */
+    color: #555;
+}
+
+form {
+    margin-top: 20px;
+    padding: 15px;
+    border: 2px dashed #3498db; /* Dashed border for upload section */
+    border-radius: 10px;
+    background-color: rgba(223,223,223,0.9); /* White-ish background for contrast */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for upload section */
+}
+
+input[type="file"] {
+    display: block;
+    margin: 10px auto;
+    padding: 8px;
+    font-size: 16px;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+
+input[type="submit"],
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform ease, background-color 0.3s ease;
+}
+
+input[type="submit"]:hover,
+button:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+    transform: scale(1.05); /* Slightly scale up on hover */
+}
+
+
+#download {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: rgba(234,255,234, 0.8); /* Soft green background with transparency */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+#downloadButton {
+    margin-top: 10px;
+}
+
+a:visited {
+    color: #848788;
+}
+#preview {
+    display: none; 
+    margin-top: 20px; 
+    padding: 15px; 
+    border: 2px solid #fdf7e3; 
+    border-radius: 10px; 
+    background-color: #ffffff; 
+    text-align: left;
+}
+
+/* Footer */
+
+#footer {
+    margin-top: 100px;
+    padding: 10px;
+    text-align: center;
+    font-size: 10px;
+    bottom: 0;
+    width: 100%;
+    font-style: italic;
+}

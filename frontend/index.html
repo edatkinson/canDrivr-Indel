@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CanDrivR-Indel</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+        
+        <h1 id="title">CanDrivR-Indel</h1>
+        <div class="container">
+            <div id="intro">
+                 <!-- Create formats tab & scripts for it-->            
+                <p> By adapting <a href="resources/Driver_BASE.pdf" target="_blank">DrivR-Base</a>, a state-of-the-art feature annotation tool to annotate INDELs, CanDrivR-Indel is able to breach pre-existing model's accuracy threshold</p>
+                <p>CanDrivR-Indel can be used by researchers to predict the cancerous pathogenicity of short (<20 base) Insertion Deletion variants (INDELs)</p>
+
+            </div>
+        </div>
+
+        <div class="container">
+            <div id="howToUse">
+                <h2>How to use CanDrivR-Indel</h2>
+                <p>1. Upload a file containing the INDELs you wish to predict the pathogenicity of</p>
+                <p>2. Click the "Predict" button</p>
+                <p>3. Download the results</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <div id="upload">
+                <h2 id="uploadtitle">Upload your file</h2>
+                <form action="/upload" method="post" enctype="multipart/form-data">
+                    <input type="file" name="file" id="file">
+                    <input type="submit" value="Predict" name="submit">
+                </form>
+            </div>
+            <div id="download">
+                <h2>Download your results</h2>
+                <button id="downloadButton">Download</button>
+            </div>
+        </div>
+
+        <div id="preview">
+            <h3>Preview:</h3>
+            <pre id="previewContent"></pre>
+        </div>
+
+
+        <script src="script.js"></script>
+    </body>
+<footer>
+    
+    <p id="footer">Created by: Ed Atkinson</p>
+        
+</footer>
+</html>
