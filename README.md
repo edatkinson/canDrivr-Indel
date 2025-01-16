@@ -1,4 +1,4 @@
-# canDrivr-Indel
+
 
 Plan for the architecture of this project
 ---------------------------------------------------------------------------------------
@@ -25,6 +25,17 @@ Plan for the architecture of this project
         - Assign driver status.
         - Combine datasets.
         - Save final dataset.
+
+New Objective:
+
+- Obtain Cadd Training data: from https://krishna.gs.washington.edu/download/CADD-development/v1.4/training_data/GRCh38/ 
+    - Done: `cadd_human_data.tsv` and `cadd_simulated_data.tsv`. These are derived from `humanDerived_InDels.tsv` and `simulation_InDels.tsv` respectively.
+    - Need to:
+        - Randomly select a set of pathogenic indels with equal chromosomal group sizes to match the lower number of neutral coding indels.
+        - Combine Dataset: Done in `process_cadd.py` and outputs `combined_cadd_data.tsv`
+        - Annotate
+
+
 
 ---------------------------------------------------------------------------------------
 
