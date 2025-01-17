@@ -56,4 +56,3 @@ print(calc_length_indel('combined_cadd_data.tsv'))
 
 
 
-
