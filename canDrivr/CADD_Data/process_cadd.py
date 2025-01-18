@@ -1,5 +1,6 @@
 
 from heapq import merge
+from itertools import count
 import pandas as pd
 
 def process_cadd(cadd_file):
@@ -46,13 +47,53 @@ def calc_length_indel(combined_file):
     data.drop(columns=['length_ref', 'length_alt', 'lengths'], inplace=True)
     data.rename(columns={'pos': 'start'}, inplace=True)
 
-    # Reorder columns to the desired format
+    # Reorder columns to the desired format 
     data = data[['chrom', 'start', 'end', 'ref', 'alt', 'driver_stat']]
 
     return data
 
 
-print(calc_length_indel('combined_cadd_data.tsv'))
+data = calc_length_indel('combined_cadd_data.tsv')
 
 
+def select_equal_amounts(data):
+    """
+    Randomly select an equal number of simulated variants for each chromosome
+    based on the counts of human-derived variants.
+    
+    Args:
+        data (pd.DataFrame): Input DataFrame with columns 'driver_stat' and 'chrom'.
+        
+    Returns:
+        pd.DataFrame: A DataFrame of simulated variants sampled to match human-derived counts.
+    """
+    # Filter for human-derived and simulated indels
+    human_derived = data[data['driver_stat'] == 1]
+    simulated_indels = data[data['driver_stat'] == 0]
+
+    # Count the number of human-derived indels per chromosome
+    count_chrom = human_derived.groupby('chrom').size()
+
+    # Initialize an empty list to store sampled simulated indels
+    sampled_simulated = []
+
+    # Iterate through each chromosome and select the same number of simulated indels
+    for chrom, count in count_chrom.items():
+        # Filter simulated indels for the current chromosome
+        sim_chrom = simulated_indels[simulated_indels['chrom'] == chrom]
+        
+        # Randomly sample 'count' indels, ensuring we don't exceed the available number
+        if count <= len(sim_chrom):
+            sampled_simulated.append(sim_chrom.sample(n=count, random_state=42))
+        else:
+            # If there are not enough simulated indels, sample all available
+            sampled_simulated.append(sim_chrom)
+
+    # Concatenate all sampled simulated indels into a single DataFrame
+    result = pd.concat(sampled_simulated, ignore_index=True)
+    result = pd.concat([human_derived, result], ignore_index=True)
+    return result
+
+   
+print(select_equal_amounts(data))
 
