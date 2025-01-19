@@ -30,19 +30,45 @@ Plan for the architecture of this project
 - Feature Allocation
     
     - Conservation Scores:
-        - Will annotate features to the whole dataset once it is done.
-            - During testing use a diluted dataset, i expect the whole annotation will take a long time for 100,000+ variants.
-    - DNA_shape:
-        - This should hopefully work easily like before with integration using a shell script.
-        - Look out for NaN bias here.
-    - New features:
-        - Once I have my combined dataset (TODOs are done), I'll start using the linux machine to add more features. 
-        - May be able to copy and paste the drivr base code and install the libraries locally which are used instead of setting up the venv listed on the github
-    - Feature combination:
-        - Should features be individually found, then combined to a final big file at the end?
-        - Explore options for this.
+        - Batch Queries to UCSC genome browser to obtain cons scores for each indel.
+        - Takes a very, very long time. Try in UNI, or find a way to do it locally.
+        - How? 
+            - Run `get_conservation.py` - this uses `final_cadd_data.bed` which is obtained from running `process_cadd.py` with `combined_cadd_data.tsv`
+        - Output?
+            - In files/ will appear all the cons files separately
+        - Needed? Merging of all features, will do this at the end when I have all of the features
     
-    - PubMed Features
+    - VEP Scores:
+        - Outputs one-hot coded scores for each indel in `final_cadd_data.bed` in /output/
+        - In order to work, you must have vep downloaded.
+            - clone ensemble vep, perl install.pl, then download the cache from ensemble documentation.
+            - For now it is located in `/home/colin./.vep/`.
+            - Python files from DrivR-Base and ./get_vep.sh do the one-hot coding of the output from vep.
+            - I have run `./get_vep.sh /home/colin/canDrivr-Indel/canDrivr/CADD_Data/ final_cadd_data.bed /home/colin/canDrivr-Indel/canDrivr/Features/FG2_vep/output/ ` which is (variant directory) (filename) (output directory)
+        
+        - Look into using values from other predictors in `VEP.md` for extra features - opportunity to expand report.
+    
+    Next:
+
+    - Dinucleotide Properties:
+
+    - DNA Shape: - half done.
+
+    - gc_CpG:
+
+    - Kernal:
+
+    - Amino Acid Substitution Matrices:
+
+    - Amino Acid Properties
+
+    - Encode
+
+    - Alpha Fold
+
+    When finished with annotation:
+        - Create a pipeline which does it all automatically so I can be more efficient with annotating my data.
+        - Provide options to omit some features (like the slow ones) to streamline testing and modelling.
 
 ---------------------------------------------------------------------------------------
 
