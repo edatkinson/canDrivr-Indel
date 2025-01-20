@@ -1,6 +1,10 @@
 # Get DNA shapes of 10 BP regions overlapping with variant
 # Load project path and any other variables
-source("/opt/vep/.vep/FG3_dinucleotide_properties/config.R")
+source("/Users/edatkinson/Repos/canDrivr-Indel/canDrivr/Features/FG3_dinucleotide_properties/config.R")
+
+# options(repos = c(CRAN = "https://cran.rstudio.com/"))
+# install.packages(c("bios2mds", "BSgenome.Hsapiens.UCSC.hg38", "DNAshapeR", "usethis", "dplyr", "withr", "ggplot2", "tzdb", "readr", "tidyverse", "data.table", "ps", "devtools", "foreach", "iterators", "doParallel", "doSNOW", "Peptides", "stringr", "tidyr"))
+
 
 library(bios2mds)
 library(BSgenome.Hsapiens.UCSC.hg38)

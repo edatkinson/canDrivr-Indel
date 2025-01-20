@@ -14,6 +14,8 @@ CADD_Data/cadd_simulated_data.tsv
 CADD_Data/humanDerived_InDels.tsv
 CADD_Data/simulation_InDels.tsv
 
-FG5_gc_CpG/hg38.fa
+/Features/FG5_gc_CpG/hg38.fa
 
-DNA_shape/hg38*
+/Features/DNA_shape/hg38*
+
+renv.lock

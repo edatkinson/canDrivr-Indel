@@ -40,6 +40,7 @@ New Objective:
 - Feature Allocation
     
     - Conservation Scores:
+        - Done on Linux although can be also done on mac.
         - Batch Queries to UCSC genome browser to obtain cons scores for each indel.
         - Takes a very, very long time. Try in UNI, or find a way to do it locally.
         - How? 
@@ -49,6 +50,7 @@ New Objective:
         - Needed? Merging of all features, will do this at the end when I have all of the features
     
     - VEP Scores:
+        - Done on Linux
         - Outputs one-hot coded scores for each indel in `final_cadd_data.bed` in /output/
         - In order to work, you must have vep downloaded.
             - clone ensemble vep, perl install.pl, then download the cache from ensemble documentation.
@@ -58,26 +60,38 @@ New Objective:
         
         - Look into using values from other predictors in `VEP.md` for extra features - opportunity to expand report.
     
-    Next:
 
     - Dinucleotide Properties:
+        - Done on mac.
+        - Output located in features/FG3_dinucleotide_properites/output
 
-    - DNA Shape: - half done.
+    - DNA Shape:
+        - Done on mac.
+        - Output located in Features/DNA_shape/output 
 
     - gc_CpG:
+        - Done on mac.
+        - Output located in Features/FG5_gc_CpG/output
 
     - Kernal:
+        - TODO
 
     - Amino Acid Substitution Matrices:
+        - TODO
 
-    - Amino Acid Properties
+    - Amino Acid Properties:
+        - TODO
 
-    - Encode
+    - Encode:
+        - TODO
 
     - Alpha Fold
+        - TODO
+
 
     When finished with annotation:
         - Create a pipeline which does it all automatically so I can be more efficient with annotating my data.
+        - Gonna be hard because I've done it on both mac and linux
         - Provide options to omit some features (like the slow ones) to streamline testing and modelling.
 
 ---------------------------------------------------------------------------------------
