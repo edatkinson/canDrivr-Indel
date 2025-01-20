@@ -7,3 +7,13 @@ vcf_file_extract.py
 
 annotation/
 
+ 
+.DS_Store
+CADD_Data/cadd_human_data.tsv
+CADD_Data/cadd_simulated_data.tsv
+CADD_Data/humanDerived_InDels.tsv
+CADD_Data/simulation_InDels.tsv
+
+FG5_gc_CpG/hg38.fa
+
+DNA_shape/hg38*
