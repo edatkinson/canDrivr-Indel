@@ -39,9 +39,22 @@ def calc_length_indel(combined_file):
     data['lengths'] = (data['length_ref'] - data['length_alt']).abs()
 
     # Determine 'end' points based on insertion or deletion
-    data['end'] = data['pos'] + data['lengths'] - 1  # Default case for deletions
-    is_insertion = data['length_alt'] > data['length_ref']  # Identify insertions
+    # Special cases:
+        # Deletion of length 1 leads to start = end.
+        # There are some cases where there are both insertions and deletions leading to start > end which is impossible
+
+    data['end'] = data['pos'] + data['lengths'] - 1  # Default case for deletions 
+
+    is_insertion = data['length_alt'] >= data['length_ref']  # Identify insertions
     data.loc[is_insertion, 'end'] = data.loc[is_insertion, 'pos'] + 1  # Adjust for insertions
+
+    def adjust_positions(row):
+        if row['pos'] == row['end']:
+            row['end'] = row['pos'] + 1
+        return row
+
+    # Apply the function to each row
+    data = data.apply(adjust_positions, axis=1)
 
     # Drop intermediate columns and rename as needed
     data.drop(columns=['length_ref', 'length_alt', 'lengths'], inplace=True)
@@ -92,8 +105,9 @@ def select_equal_amounts(data):
     # Concatenate all sampled simulated indels into a single DataFrame
     result = pd.concat(sampled_simulated, ignore_index=True)
     result = pd.concat([human_derived, result], ignore_index=True)
-    return result
+    return result.iloc[:, [0,1,2,3,4]]
 
    
-print(select_equal_amounts(data))
+select_equal_amounts(data).to_csv('final_cadd_data.bed', sep='\t', header=None, index=None)
+
 
