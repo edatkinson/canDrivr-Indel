@@ -117,6 +117,10 @@ Merged Features in `merge_featues.py` which produces `Annotated_data.csv` which 
     
     - `xgboost_model.ipynb` is where I will be first implementing models with the set of features I've found so far (DNA_shape, VEP, gc CpG, dinucleotide properties)
         - Still need to add conservation scores which I will try to do in uni with faster internet connection. This will probably produce best indicators and so are very important.
+    
+    - Tested a model using the above features. Get quite a low average CV score of: 73%, but get an overall test accuracy of 83%. This is without the conservation features, so hopefully they can help out with the accuracy by a few percentage points. 
+
+    - The real test comes on an independent test set and seeing how it compares to the models below. 
 
     - Comparative Analysis:
 
