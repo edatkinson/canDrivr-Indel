@@ -64,17 +64,27 @@ New Objective:
     - Dinucleotide Properties:
         - Done on mac.
         - Output located in features/FG3_dinucleotide_properites/output
+        - Need to check if it is producing the correct results.
 
     - DNA Shape:
         - Done on mac.
-        - Output located in Features/DNA_shape/output 
+        - Output located in Features/DNA_shape/output
+        - Need to check if it is producing the correct results.
 
     - gc_CpG:
         - Done on mac.
         - Output located in Features/FG5_gc_CpG/output
+        - Need to check if it is producing the correct results.
 
     - Kernal:
         - TODO
+        - Need to make changes to the logic to include the following:
+            - Handle Indel lengths: sequence extraction logic needs to account for the length of the indel.
+            - Adjust sequence extraction for insertions and deletions.
+                - For insertions:
+                    - Insert the alternate allele into the reference sequence
+                - Deletions:
+                    - Remove the reference allele from the sequence.
 
     - Amino Acid Substitution Matrices:
         - TODO
@@ -94,9 +104,19 @@ New Objective:
         - Gonna be hard because I've done it on both mac and linux
         - Provide options to omit some features (like the slow ones) to streamline testing and modelling.
 
+
+Merged Features in `merge_featues.py` which produces `Annotated_data.csv` which may need a reduction in some features as it has 1700+ columns. But this can be done in preprocessing for the ML models. 
+
+
+
 ---------------------------------------------------------------------------------------
 
 - Modelling 
+
+    Will start off by playing around in a jupyter notebook as this is more efficient for testing in long processing time scripts.
+    
+    - `xgboost_model.ipynb` is where I will be first implementing models with the set of features I've found so far (DNA_shape, VEP, gc CpG, dinucleotide properties)
+        - Still need to add conservation scores which I will try to do in uni with faster internet connection. This will probably produce best indicators and so are very important.
 
     - Comparative Analysis:
 
