@@ -46,8 +46,8 @@ New Objective:
         - How? 
             - Run `get_conservation.py` - this uses `final_cadd_data.bed` which is obtained from running `process_cadd.py` with `combined_cadd_data.tsv`
         - Output?
-            - In files/ will appear all the cons files separately
-        - Needed? Merging of all features, will do this at the end when I have all of the features
+            - In output/ will appear all the cons files separately
+        - Remember to sort the individual files by position, so they match up with other features.
     
     - VEP Scores:
         - Done on Linux
@@ -107,6 +107,17 @@ New Objective:
 
 Merged Features in `merge_featues.py` which produces `Annotated_data.csv` which may need a reduction in some features as it has 1700+ columns. But this can be done in preprocessing for the ML models. 
 
+---------------------------------------------------------------------------------------
+
+Plan for `get_features.sh`:
+- user inputs variant file with driver stat
+- create file with no driver stat
+- make output folder to store all features.
+- run scripts.
+- merge outputs.
+- delete prev feature files to free space.
+- 
+
 
 
 ---------------------------------------------------------------------------------------
@@ -119,6 +130,22 @@ Merged Features in `merge_featues.py` which produces `Annotated_data.csv` which 
         - Still need to add conservation scores which I will try to do in uni with faster internet connection. This will probably produce best indicators and so are very important.
     
     - Tested a model using the above features. Get quite a low average CV score of: 73%, but get an overall test accuracy of 83%. This is without the conservation features, so hopefully they can help out with the accuracy by a few percentage points. 
+
+    - Research methods in ML which can boost performance which are relevant to what I am doing, try something which my supervisor hasn't explicitly mentioned, such as LOCO-CV etc.
+
+    - I've added the conservation features, bumps up accuracy to ~85-86%. Feature reduction improves accuracy by 1%.
+    
+    - Plan for improving model:
+        - Feature importance selection, include with CV and find the best features on average and select those for final model.
+        - I don't think LOCO CV is working atm, look into other applications of it and do that.
+        - Hyperparameter tuning using GridSearch or other optimisation methods.
+        - Class imbalance resampling, as I have more of some chromosomes than others.
+        - Look into permutation importance and decide if it is worth implementing compared to feature importance.
+        - 
+
+
+---------------------------------------------------------------------------------------
+
 
     - The real test comes on an independent test set and seeing how it compares to the models below. 
 
@@ -140,5 +167,3 @@ Merged Features in `merge_featues.py` which produces `Annotated_data.csv` which 
 
 
 ---------------------------------------------------------------------------------------
-
-
