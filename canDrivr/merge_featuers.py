@@ -43,9 +43,17 @@ def merge_files(file_paths, dataset_file):
     # loop over file_paths and merge them on data
 
     for file in file_paths:
-        features = pd.read_csv(file, sep='\t')
-        data = pd.merge(data, features, on=['chrom','pos','ref_allele', 'alt_allele'])
-    
+        splitted = file.split('/')
+        if 'Conservation' in splitted:
+            features = pd.read_csv(file, sep='\t')
+            features = features.rename(columns={"start":"pos", "alt":"alt_allele","ref":"ref_allele"})
+            print(features.head())
+        else:
+            features = pd.read_csv(file, sep='\t')
+
+        # Cons scores pos is actually the end instead of the start.
+        data = pd.merge(data, features, on=['chrom','pos','ref_allele','alt_allele'])
+        # print(data.head())
     return data
     
 
