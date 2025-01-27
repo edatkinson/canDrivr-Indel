@@ -101,17 +101,20 @@ from collections import defaultdict
 
 if __name__ == "__main__":
     # Input and output file paths
-    variants_file = "/home/colin/canDrivr-Indel/canDrivr/CADD_Data/final_cadd_data.bed"
-    output_dir = "/home/colin/canDrivr-Indel/canDrivr/Features/Conservation/files"
+    # variants_file = "/home/colin/canDrivr-Indel/canDrivr/CADD_Data/final_cadd_data.bed"
+    # output_dir = "/home/colin/canDrivr-Indel/canDrivr/Features/Conservation/output/"
+    variants_file = "/Users/edatkinson/Repos/canDrivr-Indel/canDrivr/CADD_Data/final_cadd_data.bed"
+    output_dir = "/Users/edatkinson/Repos/canDrivr-Indel/canDrivr/Features/Conservation/output/"
 
     # Read the variants file
-    variants = pd.read_csv(variants_file, sep="\t")
-
+    variants = pd.read_csv(variants_file, sep="\t", names=['chrom','start','end', 'ref','alt'])
+    '''
+     
+    '''
     # Conservation files
     print(variants.head())
-    files = [
-        "phyloP4way", "phyloP7way", "phyloP17way", "phyloP20way", "phyloP30way",
-        "phyloP100way", "phyloP470way", "phastCons4way", "phastCons7way", "phastCons17way",
+    files = ["phyloP7way", "phyloP17way", "phyloP20way", "phyloP30way",
+        "phyloP100way","phyloP470way", "phastCons7way", "phastCons17way",
         "phastCons20way", "phastCons30way", "phastCons100way", "phastCons470way",
         "k24.Bismap.MultiTrackMappability", "k36.Umap.MultiTrackMappability",
         "k36.Bismap.MultiTrackMappability", "k24.Umap.MultiTrackMappability",
@@ -177,10 +180,11 @@ if __name__ == "__main__":
 
             # Add results to the DataFrame
             variants2[file] = results
-            variants2 = variants2.drop("start", axis=1)
+            variants2 = variants2.drop("end", axis=1)
+            variants2 = variants2.rename(columns={"start":"pos", "alt":"alt_allele","ref":"ref_allele"})
 
             # Save the updated DataFrame to a file
-            variants2.to_csv(f'{output_dir}hg38.{file}.bedGraph', header=None, sep="\t", index=None)
+            variants2.to_csv(f'{output_dir}hg38.{file}.bedGraph', header=True, sep="\t", index=None)
             bw.close()
         except Exception as e:
             print(f"Cannot access file {file}: {e}")

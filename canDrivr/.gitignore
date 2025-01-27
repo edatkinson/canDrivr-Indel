@@ -19,3 +19,8 @@ CADD_Data/simulation_InDels.tsv
 /Features/DNA_shape/hg38*
 
 renv.lock
+Annotated_data.csv
+output/
+
+/modelling/experimental_data.csv
+
