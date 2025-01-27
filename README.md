@@ -1,6 +1,6 @@
 
 
-Plan for the architecture of this project
+# Plan for the architecture of this project
 ---------------------------------------------------------------------------------------
 
 <!-- - Get Data 
@@ -27,7 +27,7 @@ Plan for the architecture of this project
         - Save final dataset. -->
 
 
-New Objective:
+## New Objective:
 
 - Obtain Cadd Training data: from https://krishna.gs.washington.edu/download/CADD-development/v1.4/training_data/GRCh38/ 
     - Done: `cadd_human_data.tsv` and `cadd_simulated_data.tsv`. These are derived from `humanDerived_InDels.tsv` and `simulation_InDels.tsv` respectively.
@@ -37,7 +37,7 @@ New Objective:
         - Annotate
 
 ---------------------------------------------------------------------------------------
-- Feature Allocation
+### Feature Allocation
     
     - Conservation Scores:
         - Done on Linux although can be also done on mac.
@@ -109,7 +109,7 @@ Merged Features in `merge_featues.py` which produces `Annotated_data.csv` which 
 
 ---------------------------------------------------------------------------------------
 
-Plan for `get_features.sh`:
+### Plan for `get_features.sh`:
 - user inputs variant file with driver stat
 - create file with no driver stat
 - make output folder to store all features.
@@ -122,7 +122,7 @@ Plan for `get_features.sh`:
 
 ---------------------------------------------------------------------------------------
 
-- Modelling 
+### Modelling 
 
     Will start off by playing around in a jupyter notebook as this is more efficient for testing in long processing time scripts.
     
@@ -145,7 +145,7 @@ Plan for `get_features.sh`:
 
 
 ---------------------------------------------------------------------------------------
-
+### Comparative Analysis
 
     - The real test comes on an independent test set and seeing how it compares to the models below. 
 
