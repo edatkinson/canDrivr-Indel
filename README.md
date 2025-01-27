@@ -3,7 +3,7 @@
 Plan for the architecture of this project
 ---------------------------------------------------------------------------------------
 
-- Get Data 
+<!-- - Get Data 
 
     - Filter indels from pathogenic dataset (cosmic)
         - `get_COSMIC.sh`
@@ -24,7 +24,7 @@ Plan for the architecture of this project
     - TODO;
         - Assign driver status.
         - Combine datasets.
-        - Save final dataset.
+        - Save final dataset. -->
 
 
 New Objective:
