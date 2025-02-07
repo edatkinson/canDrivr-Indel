@@ -18,9 +18,13 @@ CADD_Data/simulation_InDels.tsv
 
 /Features/DNA_shape/hg38*
 
+/Features/ProteinStructure/alphafold_files/*
+
 renv.lock
 Annotated_data.csv
 output/
 
 /modelling/experimental_data.csv
 
+CADD_Data/
+Old_Data/
