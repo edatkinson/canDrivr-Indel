@@ -2,7 +2,7 @@ import pyBigWig
 import pandas as pd
 import sys
 import time
-
+import numpy as np
 # if __name__ == "__main__":
 #     # variants_file = sys.argv[1]
 #     # output_dir = sys.argv[2]
@@ -101,26 +101,29 @@ from collections import defaultdict
 
 if __name__ == "__main__":
     # Input and output file paths
-    # variants_file = "/home/colin/canDrivr-Indel/canDrivr/CADD_Data/final_cadd_data.bed"
-    # output_dir = "/home/colin/canDrivr-Indel/canDrivr/Features/Conservation/output/"
-    variants_file = "/Users/edatkinson/Repos/canDrivr-Indel/canDrivr/CADD_Data/final_cadd_data.bed"
-    output_dir = "/Users/edatkinson/Repos/canDrivr-Indel/canDrivr/Features/Conservation/output/"
+    
+    #pathogenic
+    variants_file = "/Users/edatkinson/Repos/canDrivr-Indel/independentTesting/independent_test_set_combined.csv"
+    output_dir = "/Users/edatkinson/Repos/canDrivr-Indel/canDrivr/Features/Conservation/indtest/"
+
+    #Benign
+    # variants_file = "/Users/edatkinson/Repos/canDrivr-Indel/canDrivr/gnomad/benign_stat.tsv"
+    # output_dir = "/Users/edatkinson/Repos/canDrivr-Indel/canDrivr/Features/Conservation/output/"
 
     # Read the variants file
-    variants = pd.read_csv(variants_file, sep="\t", names=['chrom','start','end', 'ref','alt'])
+    variants = pd.read_csv(variants_file, sep=",")
     '''
-     
+     "phyloP4way","phyloP7way", "phyloP17way", 
     '''
     # Conservation files
-    print(variants.head())
-    files = ["phyloP7way", "phyloP17way", "phyloP20way", "phyloP30way",
-        "phyloP100way","phyloP470way", "phastCons7way", "phastCons17way",
+    # print(variants.head())
+    files = ["phyloP20way", "phyloP30way",
+        "phyloP100way","phyloP470way","phastCons4way","phastCons7way", "phastCons17way",
         "phastCons20way", "phastCons30way", "phastCons100way", "phastCons470way",
         "k24.Bismap.MultiTrackMappability", "k36.Umap.MultiTrackMappability",
         "k36.Bismap.MultiTrackMappability", "k24.Umap.MultiTrackMappability",
-        "k50.Bismap.MultiTrackMappability", "k50.Umap.MultiTrackMappability",
-        "k100.Bismap.MultiTrackMappability", "k100.Umap.MultiTrackMappability"
-    ]
+        "k50.Bismap.MultiTrackMappability","k50.Umap.MultiTrackMappability",
+        "k100.Bismap.MultiTrackMappability", "k100.Umap.MultiTrackMappability"]
 
     for file in files:
         variants2 = variants.copy()
@@ -154,13 +157,14 @@ if __name__ == "__main__":
 
                 # Collect intervals for batch query
                 for row in rows:
-                    if len(row['ref']) > len(row['alt']):  # Deletion
-                        start, end = row['start'], row['end']
+
+                    if len(str(row['ref_allele'])) > len(row['alt_allele']):  # Deletion
+                        start, end = row['start'], row['stop']
                         if start == end:
                             end += 1  # Ensure end > start
                     else:  # Insertion
                         start = max(row['start'] - 5, 0)
-                        end = min(row['end'] + 5, chrom_length)
+                        end = min(row['stop'] + 5, chrom_length)
 
                     intervals.append((start, end))
 
@@ -173,15 +177,15 @@ if __name__ == "__main__":
                         values = [v for v in values if v is not None]
                         avg_value = sum(values) / len(values) if values else float('nan')
                         results.append(avg_value)
-                        print(f"{chrom}:{row['start']}-{row['end']} -> {avg_value}")
+                        print(f"{chrom}:{row['start']}-{row['stop']} -> {avg_value}")
                 except Exception as e:
                     print(f"Error querying chromosome {chrom}: {e}")
                     results.extend([float('nan')] * len(rows))
 
             # Add results to the DataFrame
             variants2[file] = results
-            variants2 = variants2.drop("end", axis=1)
-            variants2 = variants2.rename(columns={"start":"pos", "alt":"alt_allele","ref":"ref_allele"})
+            variants2 = variants2.drop("stop", axis=1)
+            variants2 = variants2.rename(columns={"start":"pos"})#, "alt":"alt_allele","ref":"ref_allele"})
 
             # Save the updated DataFrame to a file
             variants2.to_csv(f'{output_dir}hg38.{file}.bedGraph', header=True, sep="\t", index=None)

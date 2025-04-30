@@ -65,6 +65,7 @@
         - Done on mac.
         - Output located in features/FG3_dinucleotide_properites/output
         - Need to check if it is producing the correct results.
+        - **NO chr2 in benign, NO chr21 in cosmic. Could Lead to bias.**
 
     - DNA Shape:
         - Done on mac.
@@ -86,15 +87,6 @@
                 - Deletions:
                     - Remove the reference allele from the sequence.
 
-    - Amino Acid Substitution Matrices:
-        - TODO
-
-    - Amino Acid Properties:
-        - TODO
-
-    - Encode:
-        - TODO
-
     - Alpha Fold
         - TODO
 
@@ -106,6 +98,8 @@
 
 
 Merged Features in `merge_featues.py` which produces `Annotated_data.csv` which may need a reduction in some features as it has 1700+ columns. But this can be done in preprocessing for the ML models. 
+
+**Important**
 
 ---------------------------------------------------------------------------------------
 
@@ -141,8 +135,81 @@ Merged Features in `merge_featues.py` which produces `Annotated_data.csv` which 
         - Hyperparameter tuning using GridSearch or other optimisation methods.
         - Class imbalance resampling, as I have more of some chromosomes than others.
         - Look into permutation importance and decide if it is worth implementing compared to feature importance.
-        - 
 
+- - -
+
+Instead of looking at just the feature importance directly from xgboost, run the model with permutations of different feature groups and find the best features, then combine them and that should result in a better model. Recursive Feature Elimination.
+
+Then do this for other ML techniques.
+
+- - -
+
+YOU HAVE A LOT OF WORK TO DO!!!!
+
+I HAVE A GNOMAD DATASET:
+Filtered for:
+- Removed duplicates
+- AF > 0.01
+- Indels of length < 20
+- Protein Position
+
+
+
+What shall I do with this?
+- Decide wether to go back and annotate with new neutral data like old model, reverting back to canDrivR-Indel
+- Or re-filter the database for an independent test set now that I know I can get gnomad data.
+- Talk to colin about this:
+  - Either re-annotate the data with the new data or continue with cadd data, but I would rather do cancer one since it has more of a direct and clear reasoning, whereas the CADD data is a bit boring.
+
+- Now have Gnomad Data and Cosmic Data, filter cosmic data for the indels which occur in the most cancerous genes (count > 50), these are listed below in the SQL code. But the current Gnomad data doesn't include this so will need to change that - will lead to less data.
+
+SQL Query for filtration of gnomad:
+
+
+SELECT reference_name, start_position, end_position, 
+       MIN(reference_bases) AS reference_bases,
+       MIN(alt) AS alt, 
+       MIN(AF) AS AF, 
+       MIN(AC) AS AC,
+       MIN(Consequence) AS Consequence,
+       MIN(IMPACT) AS IMPACT,
+       MIN(SYMBOL) AS SYMBOL,
+       MIN(Gene) AS Gene,
+       MIN(Feature_type) AS Feature_type,
+       MIN(Protein_position) AS Protein_position,
+       MIN(Amino_acids) AS Amino_acids
+FROM (
+    SELECT reference_name, start_position, end_position, reference_bases, alt, AF, AC, 
+           vep.Consequence, vep.IMPACT, vep.SYMBOL, vep.Gene, vep.Feature_type, 
+           vep.Protein_position, vep.Amino_acids,
+           ROW_NUMBER() OVER (PARTITION BY reference_name, start_position, end_position ORDER BY reference_name) as rn
+    FROM `bigquery-public-data.gnomAD.v2_1_1_exomes__chr22` AS t,  -- Corrected table name
+         UNNEST(t.alternate_bases) AS alternate_bases,
+         UNNEST(alternate_bases.vep) AS vep
+    WHERE alternate_bases.allele_type IN ('ins', 'del')  -- Filter for insertions and deletions
+      AND LENGTH(reference_bases) < 20
+      AND LENGTH(alt) < 20
+      AND vep.Amino_acids IS NOT NULL
+      AND AF > 0.01
+) AS subquery
+WHERE rn = 1
+GROUP BY reference_name, start_position, end_position
+
+
+
+
+
+
+- Make independent test set
+- Build all of the models
+- Analyse their performance and Feature Importance
+- Select Best one
+- Confidence Measure
+- PubMed feature
+- Test against independent test set - worried because of simulated indels.
+- Compare to existing models.
+- Write Up.
+- Violin plot from Amy's CScape-xf in plots. 
 
 ---------------------------------------------------------------------------------------
 ### Comparative Analysis

@@ -5,5 +5,6 @@ vep_cache="/home/colin/.vep/"
 export vep_cache
 
 # Specify the working directory
-working_dir="/home/colin/canDrivr-Indel/canDrivr/Features/FG2_vep/"
+# working_dir="/home/colin/canDrivr-Indel/canDrivr/Features/FG2_vep/"
+working_dir="/Users/edatkinson/Repos/canDrivr-Indel/canDrivr/Features/FG2_vep/"
 export working_dir

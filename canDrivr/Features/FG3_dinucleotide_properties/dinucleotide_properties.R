@@ -34,8 +34,14 @@ variantDir=args[6]
 file=args[7]
 featureOutputDir=args[8]
 
-variants = read.table(paste(variantDir, file, sep = ""), sep = "\t")
+variants = read.table(paste(variantDir, file, sep = ""), sep = ",", header=TRUE)
+
+# variants = variants[, -7]
+variants <- variants[, -(ncol(variants))]
+head(variants, n=10)
+
 colnames(variants) = c("chrom", "start", "end", "ref", "alt")
+head(variants, n=10)
 
 # Read in dinucleotide properties
 dinucleotideProperty=read.csv(dinucleotidePropertyTable)
@@ -51,9 +57,14 @@ getDinucleotideProperties = function(chrom, variants){
         variants = variants[variants$chrom == chrom, ]
         variants2 = variants
 
+        indel_length <- nchar(variants$alt) - nchar(variants$ref)
+        variants2[2] <- variants2[2] - (10 + max(0, indel_length))
+        variants2[3] <- variants2[3] + (10 + max(0, -indel_length))
+
+
         # Get the desired base pair range for DNA shape
-        variants2[2] = variants2[2]-1
-        variants2[3] = variants2[3]+1
+        # variants2[2] = variants2[2]-1
+        # variants2[3] = variants2[3]+1
 
         # Make a GRRanges object
         variants2 = makeGRangesFromDataFrame(variants2)
@@ -65,13 +76,33 @@ getDinucleotideProperties = function(chrom, variants){
         VariantDinucleotideWTSeq=read.table(paste(chrom, "VariantDinucleotides.fa", sep = "_"))
         toDelete <- seq(1, nrow(VariantDinucleotideWTSeq), 2)
         variants = cbind(variants, VariantDinucleotideWTSeq[ -toDelete ,])
-        getMutantTrinucleotides = function(variantRow){
-        mutantTrinucleotides = paste(substr(variants[variantRow, 6], 1, 1), variants[variantRow, 5], substr(variants[variantRow, 6], 3, 3), sep = "")
-        return(mutantTrinucleotides)
-        }
+
+        # getMutantTrinucleotides = function(variantRow){
+        # mutantTrinucleotides = paste(substr(variants[variantRow, 6], 1, 1), variants[variantRow, 5], substr(variants[variantRow, 6], 3, 3), sep = "")
+        # return(mutantTrinucleotides)
+        # }
 
         # Carry out function to retrieve mutant trinucleotides for each variant
-        variantdfapply <- lapply(1:nrow(variants), getMutantTrinucleotides)
+        # variantdfapply <- lapply(1:nrow(variants), getMutantTrinucleotides)
+        # Carry out function to retrieve mutant trinucleotides for each variant
+        # Function to get mutated sequence
+        getMutantSequence = function(variantRow) {
+            ref_seq <- variants[variantRow, "ref"]
+            alt_seq <- variants[variantRow, "alt"]
+            full_seq <- as.character(getSeq(Hsapiens, 
+                                            variants[variantRow, "chrom"], 
+                                            start=variants[variantRow, "start"]-10, 
+                                            end=variants[variantRow, "end"]+10))
+
+            mutated_seq <- paste0(substr(full_seq, 1, 10), 
+                                alt_seq, 
+                                substr(full_seq, 11 + nchar(ref_seq), nchar(full_seq)))
+            return(mutated_seq)
+        }
+
+        # Apply to all variants
+        variantdfapply <- lapply(1:nrow(variants), getMutantSequence)
+
 
         # Melt lists of variants into a dataframe
         variantdf = do.call(rbind.data.frame, variantdfapply)
@@ -158,5 +189,5 @@ for(i in 1:22){
 }
 
 # Write the merged results to a CSV file
-outputFile <- file.path(featureOutputDir, "dinucleotideProperties.txt")
+outputFile <- file.path(featureOutputDir, "dinucleotideProperties_indTest.txt")
 write.table(mergedVariants, outputFile, quote = FALSE, row.names = FALSE, sep = "\t")

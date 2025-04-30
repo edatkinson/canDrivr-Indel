@@ -7,6 +7,7 @@ vcf_file_extract.py
 
 annotation/
 
+
  
 .DS_Store
 CADD_Data/cadd_human_data.tsv
@@ -28,3 +29,17 @@ output/
 
 CADD_Data/
 Old_Data/
+
+*.csv
+
+Features/Conservation/chr21
+Features/Conservation/indtest
+Features/Conservation/output
+Features/Conservation/pathogenic_out
+Features/DNA_shape/output
+Features/FG2_vep/cos_output
+Features/FG2_vep/output
+
+Features/FG3_dinucleotide_properties/output
+
+gnomad
