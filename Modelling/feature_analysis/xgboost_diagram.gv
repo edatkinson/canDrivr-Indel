@@ -1,0 +1,29 @@
+// XGBoost Binary Classification Process
+digraph {
+	A [label="Input Data"]
+	B [label="Initial Prediction (f₀)"]
+	C [label="Compute Gradients & Hessians
+(Residuals)"]
+	D [label="Train Decision Tree
+(Fit to gradients)"]
+	E [label="Scale Tree Output
+by Learning Rate (η)"]
+	F [label="Update Prediction
+f = f + η × (Tree Output)"]
+	G [label="Repeat for n_estimators"]
+	H [label="Aggregate Predictions
+(f = f₀ + Σ (η × Tree Outputs))"]
+	I [label="Apply Sigmoid
+(Convert to Probabilities)"]
+	J [label="Binary Classification
+(0 / 1)"]
+	A -> B
+	B -> C
+	C -> D
+	D -> E
+	E -> F
+	F -> G [label=Iterate]
+	G -> H
+	H -> I
+	I -> J
+}
