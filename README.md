@@ -26,7 +26,7 @@
         - Combine datasets.
         - Save final dataset. -->
 
-
+<!-- 
 ## New Objective:
 
 - Obtain Cadd Training data: from https://krishna.gs.washington.edu/download/CADD-development/v1.4/training_data/GRCh38/ 
@@ -233,4 +233,41 @@ GROUP BY reference_name, start_position, end_position
     - other models
 
 
----------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------- -->
+
+
+
+# CanDrivR Indel
+
+- - -
+
+`canDrivr`
+- `Annotation`: gene annotation to check exonic boundaries
+- `Features`: 
+  - Each feature, updated DrivR-Base code for each one.
+- `modelling`: initial modelling with old data used in the interim report.
+
+
+`Modelling`:
+- Contains feature analysis, confidence analysis.
+    `new_approach`:
+        - Functions for training and testing in train_classifier.py
+        - confidence.py contains code for bootstrapped aggregation.
+        - optimisation.py optimises model using gridsearch.
+        - prepare_trainingdata.py prepares the data for LOCO-CV and testing.
+  - `visualise_data`:
+    - plotted and interpretted feature distributions 
+  - `plots.ipynb`:
+    - plot pie charts, PCA explained variance etc (not used in the end), data chromosomal subsets, feature distribution.
+  - `models`
+    - Old code for training and testing models.
+    - Contains data collection code / pre processing for cosmic data
+
+    `formatting`
+        -Formatting vep files to be used for modelling.
+        - Retrieve pubmed counts from API
+
+`Frontend & Backend`
+- Started making a website for the predictor for future use using Flask and Javascript.
+- Aim is to streamline the new DrivR-Base-Indel annotation for user inputted data, then use the pretrained model to predict variant driver status.
+- This was to develop my knowledge of web architecture, backend-frontend-database protocol and industry standard code for job prospects, not finished but will extend.  

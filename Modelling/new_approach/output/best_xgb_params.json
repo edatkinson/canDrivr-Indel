@@ -1,7 +1,0 @@
-{
-    "learning_rate": 0.2,
-    "max_depth": 5,
-    "n_estimators": 200,
-    "reg_alpha": 0,
-    "subsample": 1.0
-}

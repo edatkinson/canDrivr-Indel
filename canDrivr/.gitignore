@@ -5,7 +5,10 @@ data/
 
 vcf_file_extract.py
 
-annotation/
+annotation/*.bed
+annotation/*.tsv
+annotation/*.gff3
+
 
 
  
